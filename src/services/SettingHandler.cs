@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Interface;
 using Model;
 using Utils;
 
@@ -23,8 +22,11 @@ namespace Service {
             string json = DocumentHandler.LoadFromFile(path);
             Setting? s = JsonSerializer.Deserialize<Setting>(json);
             if (s == null) {
+
                 throw new Exception("Cannot deserialize your setting file");
             }
+
+            Logger.Debug("Load your setting successfully!");
 
             return s;
         }
@@ -32,8 +34,9 @@ namespace Service {
         public static void SerializedToSettingFile (Setting s) {
             string pathFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setting.json");
             using (StreamWriter sw = new StreamWriter(pathFile)) {
-               string json = JsonSerializer.Serialize<Setting>(s);
-               sw.WriteLine(json);
+                string json = JsonSerializer.Serialize<Setting>(s);
+                sw.WriteLine(json);
+                Logger.Debug("Save your setting successfully!");
             }
         }
     }

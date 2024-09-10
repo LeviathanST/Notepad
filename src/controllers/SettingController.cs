@@ -4,17 +4,17 @@ using Service;
 
 namespace Controller {
     public class SettingController : ISettingController {
-        public void Init() {
+        public Setting s;
+
+        public SettingController () {
+            this.s = SettingHandler.DeserializedFromSettingFile();
+        }
+
+        public void InitDefaultSetting() {
             SettingHandler.InitSettingFile();
         }
-        public void Deserialized() {
-            SettingHandler.DeserializedFromSettingFile();
-        }
-        public void Serialized() {
-            Setting s = new Setting();
 
-            // TODO: logic when setting is changed
-
+        public void SaveSetting(Setting s) {
             SettingHandler.SerializedToSettingFile(s);
         }
     }
